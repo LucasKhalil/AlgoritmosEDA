@@ -41,11 +41,13 @@ public class Array {
 
     public void selectionSort() { // selectionSort
         for (int i = 0; i < this.content.length - 1; i++) {
+            int menorValorIdx = i;
             for (int j = i + 1; j < this.content.length; j++) {
-                if (this.content[j] < this.content[i]) {
-                    swap(i, j);
+                if (this.content[j] < this.content[menorValorIdx]) {
+                    menorValorIdx = j;
                 }
             }
+            swap(i, menorValorIdx);
         }
     }
 
