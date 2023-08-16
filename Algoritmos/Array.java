@@ -152,6 +152,29 @@ public class Array {
         particiona(idxPivot + 1, lmtDireito);
     }
 
+    public void countingSort(){
+        int biggestValue = 0;
+        for (int i = 0; i<this.content.length; i++){
+            if(this.content[i] > biggestValue){
+                biggestValue = this.content[i];
+            }
+        }
+        boolean[] aux = new boolean[biggestValue];
+        for (int i = 0; i<this.content.length; i++){
+            aux[this.content[i]-1] = true;
+        }
+        int lastAvailableIdx = 0;
+        for(int i = 0; i < aux.length; i++){
+            if(aux[i]){
+                this.content[lastAvailableIdx++] = i+1;
+            }
+        }
+    }
+
+    public void radixSort(){
+
+    }
+
     public void swap(int i, int j) {
         int aux = this.content[i]; // variável auxiliar
         this.content[i] = this.content[j];
