@@ -152,26 +152,56 @@ public class Array {
         particiona(idxPivot + 1, lmtDireito);
     }
 
-    public void countingSort(){
+    public void simpleCountingSort() {
+        // Identificar o maior valor
         int biggestValue = 0;
-        for (int i = 0; i<this.content.length; i++){
-            if(this.content[i] > biggestValue){
+        for (int i = 0; i < this.content.length; i++) {
+            if (this.content[i] > biggestValue) {
                 biggestValue = this.content[i];
             }
         }
+        // criar e atualizar o array auxiliar
         boolean[] aux = new boolean[biggestValue];
-        for (int i = 0; i<this.content.length; i++){
-            aux[this.content[i]-1] = true;
+        for (int i = 0; i < this.content.length; i++) {
+            aux[this.content[i] - 1] = true;
         }
+        // ordenar o array original
         int lastAvailableIdx = 0;
-        for(int i = 0; i < aux.length; i++){
-            if(aux[i]){
-                this.content[lastAvailableIdx++] = i+1;
+        for (int i = 0; i < aux.length; i++) {
+            if (aux[i]) {
+                this.content[lastAvailableIdx++] = i + 1;
             }
         }
     }
 
-    public void radixSort(){
+    public void countingSort() {
+        // Identificar o maior valor
+        int biggestValue = 0;
+        for (int i = 0; i < this.content.length; i++) {
+            if (this.content[i] > biggestValue) {
+                biggestValue = this.content[i];
+            }
+        }
+        // criar e preencher o Array auxiliar
+        int[] aux = new int[biggestValue];
+        for (int i = 0; i < this.content.length; i++) {
+            aux[this.content[i] - 1] += 1;
+        }
+        // atualizar o array auxiliar para obter a cumulativa
+        for (int i = 1; i < aux.length; i++) {
+            aux[i] += aux[i - 1];
+        }
+        // criar um array que terá os valores já ordenados
+        int[] orderedArray = new int[this.content.length];
+        for (int i = 0; i < this.content.length; i++) {
+            aux[this.content[i] - 1]--;
+            orderedArray[aux[this.content[i] - 1]] = this.content[i];
+        }
+        // substituir o array original pelo ordenado
+        this.content = orderedArray;
+    }
+
+    public void radixSort() {
 
     }
 
