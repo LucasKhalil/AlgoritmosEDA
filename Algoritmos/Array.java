@@ -154,12 +154,8 @@ public class Array {
 
     public void simpleCountingSort() {
         // Identificar o maior valor
-        int biggestValue = 0;
-        for (int i = 0; i < this.content.length; i++) {
-            if (this.content[i] > biggestValue) {
-                biggestValue = this.content[i];
-            }
-        }
+        int biggestValue = getMaximum();
+
         // criar e atualizar o array auxiliar
         boolean[] aux = new boolean[biggestValue];
         for (int i = 0; i < this.content.length; i++) {
@@ -176,12 +172,8 @@ public class Array {
 
     public void countingSort() {
         // Identificar o maior valor
-        int biggestValue = 0;
-        for (int i = 0; i < this.content.length; i++) {
-            if (this.content[i] > biggestValue) {
-                biggestValue = this.content[i];
-            }
-        }
+        int biggestValue = getMaximum();
+
         // criar e preencher o Array auxiliar
         int[] aux = new int[biggestValue];
         for (int i = 0; i < this.content.length; i++) {
@@ -202,7 +194,43 @@ public class Array {
     }
 
     public void radixSort() {
+        int biggestValue = getMaximum();
+        for (int exp = 1; biggestValue / exp > 0; exp *= 10)
+            countSort(exp);
+    }
 
+    private void countSort(int exp) { // exp é o expoente de 10
+        int orderedArray[] = new int[this.content.length]; // Array que ficará com os elementos ordenados a partir do
+                                                           // dígito atual
+        int aux[] = new int[10];
+
+        // Registra as ocorrências de cada dígito na matriz auxiliar
+        for (int i = 0; i < this.content.length; i++)
+            aux[(this.content[i] / exp) % 10]++;
+
+        // transforma a matriz auxiliar na cumulativa
+        for (int i = 1; i < 10; i++)
+            aux[i] += aux[i - 1];
+
+        // ordena o orderedArray de acordo com o dígito atual
+        for (int i = this.content.length - 1; i >= 0; i--) {
+            orderedArray[aux[(this.content[i] / exp) % 10] - 1] = this.content[i];
+            aux[(this.content[i] / exp) % 10]--;
+        }
+
+        // modifica o this.content para o array ordenado pelo dígito atual
+        for (int i = 0; i < this.content.length; i++)
+            this.content[i] = orderedArray[i];
+    }
+
+    private int getMaximum() {
+        int biggestValue = 0;
+        for (int i = 0; i < this.content.length; i++) {
+            if (this.content[i] > biggestValue) {
+                biggestValue = this.content[i];
+            }
+        }
+        return biggestValue;
     }
 
     public void swap(int i, int j) {
