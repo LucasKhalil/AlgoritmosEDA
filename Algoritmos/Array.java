@@ -107,47 +107,23 @@ public class Array {
         particiona(0, this.content.length - 1);
     }
 
-    private void particiona(int lmtEsquerdo, int lmtDireito) {
-        // Os limites esquerdo e direito do slice do Array que será particionado
-        if (lmtDireito <= lmtEsquerdo) { // condição de parada
+    public void particiona(int lmtEsquerdo, int lmtDireito) {
+        if (lmtEsquerdo >= lmtDireito) {
             return;
         }
-        // Aqui definimos o pivot como um valor dentro dos limites estabelecidos:
         int idxPivot = (int) Math.floor(Math.random() * (lmtDireito - lmtEsquerdo + 1) + lmtEsquerdo);
         int pivot = this.content[idxPivot];
-        // Array auxiliar que será utilizado para o particionamento:
-        int[] aux = new int[lmtDireito - lmtEsquerdo + 1];
-        // menor índice disponível no array auxiliar:
-        int menorIdx = 0;
-        // maior índice disponível no array auxiliar:
-        int maiorIdx = aux.length - 1;
-        // aqui iteramos pela lista auxiliar
-        for (int i = 0; i < aux.length; i++) {
-            if (i + lmtEsquerdo == idxPivot) { // se o valor que estivermos olhando for o pivot, pulamos
-                                               // ele
-                continue;
-            }
-            if (this.content[i + lmtEsquerdo] < pivot) { // se o valor que estivermos olhando for menor que o pivot, ele
-                                                         // será colocado no espaço mais à esquerda do array auxiliar
-                aux[menorIdx] = this.content[i + lmtEsquerdo];
-                menorIdx += 1;
+        swap(idxPivot, 0);
+        idxPivot = 0;
+        int fim = lmtDireito;
+        int i = lmtEsquerdo + 1;
+        while (i <= fim) {
+            if (this.content[i] <= pivot) {
+                swap(i++, idxPivot++);
             } else {
-                aux[maiorIdx] = this.content[i + lmtEsquerdo]; // caso contrário, será colocado mais à direita
-                maiorIdx -= 1;
+                swap(i, fim--);
             }
         }
-        int idxPivotAuxiliar = menorIdx; // índice do pivot na lista auxiliar
-        aux[idxPivotAuxiliar] = pivot; // aqui colocamos o pivot no seu lugar
-        // note que agora temos :
-        // idxPivot(índice original do pivot)
-        // idxPivotAuxiliar(índice do pivot na lista auxiliar)
-        // agora vamos substituir o slice correspondente por aux na lista original:
-        for (int i = 0; i < aux.length; i++) {
-            this.content[i + lmtEsquerdo] = aux[i];
-        }
-        // uma vez feito isso, o índice do pivot na lista original mudou, agora ele é
-        idxPivot = idxPivotAuxiliar + lmtEsquerdo;
-        // repetiremos o processo para os slices agora antes e depois do pivot
         particiona(lmtEsquerdo, idxPivot - 1);
         particiona(idxPivot + 1, lmtDireito);
     }
@@ -204,11 +180,11 @@ public class Array {
                                                            // dígito atual
         int aux[] = new int[10];
 
-        // Registra as ocorrências de cada dígito na matriz auxiliar
+        // Registra as ocorrências de cada dígito no array auxiliar
         for (int i = 0; i < this.content.length; i++)
             aux[(this.content[i] / exp) % 10]++;
 
-        // transforma a matriz auxiliar na cumulativa
+        // transforma o array auxiliar na cumulativa
         for (int i = 1; i < 10; i++)
             aux[i] += aux[i - 1];
 
@@ -242,5 +218,4 @@ public class Array {
     public int[] getContent() {
         return this.content;
     }
-
 }
