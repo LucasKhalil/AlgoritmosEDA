@@ -52,7 +52,9 @@ public class Array {
     }
 
     public void mergeSort() {
-        breaker(0, this.content.length - 1);
+        if(!(this.content == null || this.content.length == 0)){
+            breaker(0, this.content.length - 1);
+        }
     }
 
     private void breaker(int inicio, int fim) {
@@ -69,7 +71,7 @@ public class Array {
         merger(inicio, meio, meio + 1, fim);
     }
 
-    private void merger(int ini1, int fim1, int ini2, int fim2) {
+    private void merger(int ini1, int fim1, int ini2, int fim2) { // ini2 é igual a fim1 + 1, portanto não precisa de duas variàveis
         int original = ini1; // início original da lista
         int[] aux = new int[fim1 - ini1 + fim2 - ini2 + 2]; // array auxiliar tem o tamanho dos dois intervalos somados
         int closestIdx = 0; // índice mais próximo do início do array
