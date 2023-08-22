@@ -52,7 +52,7 @@ public class Array {
     }
 
     public void mergeSort() {
-        if(!(this.content == null || this.content.length == 0)){
+        if (!(this.content == null || this.content.length == 0)) {
             breaker(0, this.content.length - 1);
         }
     }
@@ -71,7 +71,8 @@ public class Array {
         merger(inicio, meio, meio + 1, fim);
     }
 
-    private void merger(int ini1, int fim1, int ini2, int fim2) { // ini2 é igual a fim1 + 1, portanto não precisa de duas variàveis
+    private void merger(int ini1, int fim1, int ini2, int fim2) { // ini2 é igual a fim1 + 1, portanto não precisa de
+                                                                  // duas variàveis
         int original = ini1; // início original da lista
         int[] aux = new int[fim1 - ini1 + fim2 - ini2 + 2]; // array auxiliar tem o tamanho dos dois intervalos somados
         int closestIdx = 0; // índice mais próximo do início do array
@@ -115,8 +116,8 @@ public class Array {
         }
         int idxPivot = (int) Math.floor(Math.random() * (lmtDireito - lmtEsquerdo + 1) + lmtEsquerdo);
         int pivot = this.content[idxPivot];
-        swap(idxPivot, 0);
-        idxPivot = 0;
+        swap(idxPivot, lmtEsquerdo);
+        idxPivot = lmtEsquerdo;
         int fim = lmtDireito;
         int i = lmtEsquerdo + 1;
         while (i <= fim) {
@@ -128,47 +129,6 @@ public class Array {
         }
         particiona(lmtEsquerdo, idxPivot - 1);
         particiona(idxPivot + 1, lmtDireito);
-    }
-
-    public void simpleCountingSort() {
-        // Identificar o maior valor
-        int biggestValue = getMaximum();
-
-        // criar e atualizar o array auxiliar
-        boolean[] aux = new boolean[biggestValue];
-        for (int i = 0; i < this.content.length; i++) {
-            aux[this.content[i] - 1] = true;
-        }
-        // ordenar o array original
-        int lastAvailableIdx = 0;
-        for (int i = 0; i < aux.length; i++) {
-            if (aux[i]) {
-                this.content[lastAvailableIdx++] = i + 1;
-            }
-        }
-    }
-
-    public void countingSort() {
-        // Identificar o maior valor
-        int biggestValue = getMaximum();
-
-        // criar e preencher o Array auxiliar
-        int[] aux = new int[biggestValue];
-        for (int i = 0; i < this.content.length; i++) {
-            aux[this.content[i] - 1] += 1;
-        }
-        // atualizar o array auxiliar para obter a cumulativa
-        for (int i = 1; i < aux.length; i++) {
-            aux[i] += aux[i - 1];
-        }
-        // criar um array que terá os valores já ordenados
-        int[] orderedArray = new int[this.content.length];
-        for (int i = 0; i < this.content.length; i++) {
-            aux[this.content[i] - 1]--;
-            orderedArray[aux[this.content[i] - 1]] = this.content[i];
-        }
-        // substituir o array original pelo ordenado
-        this.content = orderedArray;
     }
 
     public void radixSort() {
