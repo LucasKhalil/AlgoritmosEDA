@@ -63,17 +63,27 @@ public class Stack {
     }
 
     // verifica se a pilha contém o elemento
-    public boolean contains(int n) {
+    public boolean contains(int n) { // << com problemas
         if (this.isEmpty()) {
             return false;
         }
         Stack aux = new Stack(top + 1);
-        while (this.content[this.top] != n || !this.isEmpty()) {
+        while (true) {
+            System.out.println(aux.toString());
+            if (this.isEmpty()) {
+                System.out.println("entrou no isEmpty");
+                break;
+            } else if (this.content[this.top] == n) {
+                System.out.println("Entrou no ==");
+                break;
+            }
             aux.push(this.pop());
         }
         boolean toReturn = false;
-        if (aux.peek() == n) {
-            toReturn = true;
+        if (!aux.isEmpty()) {
+            if (aux.peek() == n) {
+                toReturn = true;
+            }
         }
         while (!aux.isEmpty()) {
             this.push(aux.pop());
@@ -102,5 +112,17 @@ public class Stack {
 
     public int getTop() {
         return this.top;
+    }
+
+    public int[] getContent() {
+        return this.content;
+    }
+
+    public String toString() {
+        String toReturn = "";
+        for (int i = this.content.length - 1; i >= 0; i--) {
+            toReturn += "[" + this.content[i] + "]";
+        }
+        return toReturn;
     }
 }
