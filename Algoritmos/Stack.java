@@ -75,17 +75,17 @@ public class Stack {
                 break;
             } else if (this.content[this.top] == n) {
                 System.out.println("Entrou no ==");
+                aux.push(this.pop());
                 break;
             }
             aux.push(this.pop());
         }
         boolean toReturn = false;
-        if (!aux.isEmpty()) {
+
+        while (!aux.isEmpty()) {
             if (aux.peek() == n) {
                 toReturn = true;
             }
-        }
-        while (!aux.isEmpty()) {
             this.push(aux.pop());
         }
         return toReturn;
@@ -97,7 +97,14 @@ public class Stack {
             return -1;
         }
         Stack aux = new Stack(top + 1);
-        while (this.content[this.top] != n || !this.isEmpty()) {
+        while (true) {
+            if (this.isEmpty()) {
+                break;
+            }
+            if (this.content[this.top] == n) {
+                aux.push(this.pop());
+                break;
+            }
             aux.push(this.pop());
         }
         int toReturn = -1;
