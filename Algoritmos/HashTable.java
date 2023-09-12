@@ -42,10 +42,10 @@ public class HashTable implements T {
         }
     }
 
-    public Aluno getAluno(int matricula) {
+    public Aluno getAluno(int matricula) { // DEVE SER O(1)
         String[] arr = String.valueOf(matricula).split("");
         int[] v = new int[arr.length];
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) { // << Isto não é O(1)
             v[i] = Integer.valueOf(arr[i]);
         }
         int position = v[v.length - this.order];
@@ -63,10 +63,10 @@ public class HashTable implements T {
         return table.getAluno(matricula);
     }
 
-    public void remove(int matricula) {
+    public void remove(int matricula) { // DEVE SER O(1)
         String[] arr = String.valueOf(matricula).split("");
         int[] v = new int[arr.length];
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) { // << Não é O(1)
             v[i] = Integer.valueOf(arr[i]);
         }
         int position = v[v.length - this.order];
