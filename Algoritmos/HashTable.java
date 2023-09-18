@@ -35,18 +35,18 @@ public class HashTable<T> {
 
     public void resize() {
         HashTable aux = new HashTable<T>(this.size * 2);
-        this.replace(aux);
+        this.rehash(aux);
         this.size *= 2;
         this.content = (T[]) aux.getContent();
     }
 
-    public void replace(HashTable newTable) {
+    public void rehash(HashTable newTable) {
         for (int i = 0; i < this.size; i++) {
             newTable.add(this.content[i]);
         }
     }
 
-    public int search(T value) {
+    public int get(T value) {
         int position = value.hashCode() % this.size;
         while (true) {
             if (this.content[position] == null) {
@@ -60,7 +60,7 @@ public class HashTable<T> {
     }
 
     public void remove(T value) {
-        int position = this.search(value);
+        int position = this.get(value);
         if (position == -1)
             return;
         this.content[position] = (T) new Deleted();
