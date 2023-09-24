@@ -141,13 +141,3 @@ class Aluno {
         return this.nome;
     }
 }
-
-class Main {
-    public static void main(String[] args) {
-        RecursiveHashTable ht = new RecursiveHashTable(9);
-        ht.add("122110409", "Lucas Khalil Azevedo Dantas");
-        ht.add("222110408", "Random");
-        ht.add("121110409", "Aluno período 21.1");
-        ht.add("122110409", "Luis Khalil");
-    }
-}
