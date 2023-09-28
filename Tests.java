@@ -4,66 +4,80 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import Algoritmos.Array;
 import Algoritmos.Stack;
+import Algoritmos.BinarySearchTree.BinarySearchTree;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class Tests {
 
-    private Stack emptyStackLen10;
-    private Stack emptyStackLen1;
-    private Stack emptyStackLen0;
-    private Stack repeatedElementsStack;
-    private Stack differentElementsStack;
+    BinarySearchTree BST1;
+    BinarySearchTree BST2;
+    BinarySearchTree BST3;
 
     @Before
     public void setUp() {
-        this.emptyStackLen10 = new Stack(10);
-        this.emptyStackLen1 = new Stack(1);
-        this.emptyStackLen0 = new Stack(0);
-        this.repeatedElementsStack = new Stack(new int[] { 2, 2, 2, 2, 2, 2 });
-        this.differentElementsStack = new Stack(new int[] { 1, 2, 3, 4, 7, 10, 5 });
-    }
+        this.BST1 = new BinarySearchTree();
+        this.BST2 = new BinarySearchTree();
+        this.BST3 = new BinarySearchTree();
 
-    private void genericTestEmpty(Stack stack) {
-        assertTrue(stack.isEmpty());
-        try {
-            stack.pop();
-        } catch (Exception e) {
-        }
-        System.out.println(stack.toString());
-        stack.push(10);
-        System.out.println(stack.toString());
-        assertEquals(stack.peek(), 10);
-        assertEquals(stack.size(), 1);
-        assertEquals(stack.capacity(), stack.getContent().length);
-        assertEquals(stack.pop(), 10);
-        System.out.println(stack.toString());
-        assertEquals(stack.size(), 0);
-        assertEquals(stack.capacity(), stack.getContent().length);
-        for (int i = 0; i < stack.capacity(); i++) {
-            stack.push(i);
-            System.out.println(stack.toString());
-        }
-        assertTrue(stack.isFull());
-        try {
-            stack.push(0);
-        } catch (Exception e) {
-        }
-        assertTrue(stack.isFull());
-        assertTrue(!stack.isEmpty());
-        assertTrue(stack.contains(stack.capacity() - 1));
-        assertTrue(stack.contains((stack.capacity() - 1) / 2));
-        assertTrue(stack.contains(0));
-        assertEquals(stack.indexOf(stack.capacity() - 1), stack.capacity() - 1);
-        assertEquals(stack.indexOf((stack.capacity() - 1) / 2), (stack.capacity() - 1) / 2);
-        assertEquals(stack.indexOf(0), 0);
+        // BST1 Ordenada
+        this.BST1.add(10);
+        BST1.add(9);
+        BST1.add(8);
+        BST1.add(7);
+        BST1.add(6);
+        BST1.add(5);
+        BST1.add(4);
+        BST1.add(3);
+        BST1.add(2);
+        BST1.add(1);
+        BST1.add(0);
 
+        // BST2 Balanceada
+        BST2.add(5);
+        BST2.add(2);
+        BST2.add(8);
+        BST2.add(0);
+        BST2.add(3);
+        BST2.add(6);
+        BST2.add(9);
+        BST2.add(1);
+        BST2.add(4);
+        BST2.add(7);
+        BST2.add(10);
+
+        // BST Aleatória
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
+        BST3.add((int) (Math.random() * 11));
     }
 
     @Test
-    public void testStackLen10() {
-        Stack stack = this.emptyStackLen10;
-        genericTestEmpty(stack);
+    public void testRemove() {
+        System.out.println(Arrays.toString(this.BST1.preOrder().split(" ")));
+        System.out.println(Arrays.toString(this.BST2.preOrder().split(" ")));
+        System.out.println(Arrays.toString(this.BST3.preOrder().split(" ")));
+        this.BST1.remove(0);
+        this.BST2.remove(2);
+        this.BST3.remove(0);
+        System.out.println(Arrays.toString(this.BST1.preOrder().split(" ")));
+        System.out.println(Arrays.toString(this.BST2.preOrder().split(" ")));
+        System.out.println(Arrays.toString(this.BST3.preOrder().split(" ")));
+
     }
 
 }
