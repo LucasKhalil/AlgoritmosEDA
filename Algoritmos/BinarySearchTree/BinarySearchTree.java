@@ -31,22 +31,6 @@ public class BinarySearchTree {
         }
     }
 
-    public void remove(int value) {
-        NodeTree toRemove = this.search(value);
-        if (toRemove == null)
-            return;
-        String[] toAdd = this.preOrder(toRemove).split(" ");
-        if (toRemove.getContent() > toRemove.getFather().getContent())
-            toRemove.getFather().setBig(null);
-        else
-            toRemove.getFather().setSmall(null);
-
-        for (int i = 1; i < toAdd.length; i++) {
-            if (toAdd[i] != "")
-                this.add(Integer.valueOf(toAdd[i]));
-        }
-    }
-
     public NodeTree search(int value) {
         return this.search(this.root, value);
     }
@@ -123,10 +107,115 @@ public class BinarySearchTree {
         return this.root == null;
     }
 
-    @Override
-    public int hashCode() {
-        String value = this.preOrder();
-        return Integer.valueOf(value);
+    public NodeTree min() {
+        return this.min(this.root);
     }
 
+    private NodeTree min(NodeTree node) {
+        NodeTree toReturn = null;
+        if (node != null) {
+            if (node.getSmall() == null)
+                toReturn = node;
+            else
+                toReturn = this.min(node.getSmall());
+        }
+        return toReturn;
+    }
+
+    public NodeTree max() {
+        return this.max(this.root);
+    }
+
+    private NodeTree max(NodeTree node) {
+        NodeTree toReturn = null;
+        if (node != null) {
+            if (node.getBig() == null)
+                toReturn = node;
+            else
+                toReturn = this.max(node.getBig());
+        }
+        return toReturn;
+    }
+
+    public NodeTree sucessor(int content) {
+        return sucessor(this.search(content));
+    }
+
+    public NodeTree sucessor(NodeTree node) {
+        NodeTree toReturn = null;
+        if (node != null)
+            toReturn = this.min(node.getBig());
+        if (toReturn == null) {
+            NodeTree aux = node.getFather();
+            while (aux != null && aux.getContent() < node.getContent()) {
+                aux = aux.getFather();
+            }
+            toReturn = aux;
+        }
+        return toReturn;
+    }
+
+    public NodeTree predecessor(int content) {
+        return predecessor(this.search(content));
+    }
+
+    public NodeTree predecessor(NodeTree node) {
+        NodeTree toReturn = null;
+        if (node != null)
+            toReturn = this.max(node.getSmall());
+        if (toReturn == null) {
+            NodeTree aux = node.getFather();
+            while (aux != null && aux.getContent() > node.getContent()) {
+                aux = aux.getFather();
+            }
+            toReturn = aux;
+        }
+        return toReturn;
+    }
+
+    public void remove(int content) {
+        this.remove(this.search(content));
+    }
+
+    public void remove(NodeTree node) {
+        if (node == null)
+            return;
+        int degree = node.getDegree();
+        if (degree == 0) { // Folha
+            if (node.getFather() == null) { // Raiz folha
+                this.root = null;
+            } else {
+                if (node.getContent() > node.getFather().getContent())
+                    node.getFather().setBig(null);
+                else
+                    node.getFather().setSmall(null);
+            }
+
+        } else if (degree == 1) { // Ramo simples
+            if (node.getFather() == null) { // Ramo simples é a raiz
+                if (node.getBig() != null)
+                    this.root = node.getBig();
+                else
+                    this.root = node.getSmall();
+
+            } else { // Ramo simples não é a raiz
+                NodeTree aux = null;
+                if (node.getBig() != null)
+                    aux = node.getBig();
+                else
+                    aux = node.getSmall();
+
+                if (node.getContent() > node.getFather().getContent())
+                    node.getFather().setBig(aux);
+                else
+                    node.getFather().setSmall(aux);
+                aux.setFather(node.getFather());
+            }
+
+        } else { // Ramo duplo
+            NodeTree substitute = this.sucessor(node);
+            this.remove(substitute);
+            node.setContent(substitute.getContent());
+        }
+    }
 }

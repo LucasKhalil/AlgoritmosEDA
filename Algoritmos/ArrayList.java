@@ -113,4 +113,12 @@ public class ArrayList {
         }
         this.content = aux;
     }
+
+    public boolean contains(int value) {
+        for (int i = 0; i < this.content.length; i++) {
+            if (this.content[i] == value)
+                return true;
+        }
+        return false;
+    }
 }
