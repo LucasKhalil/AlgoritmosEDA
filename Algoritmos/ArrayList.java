@@ -1,5 +1,7 @@
 package Algoritmos;
 
+import java.util.Arrays;
+
 public class ArrayList {
 
     private int[] content;
@@ -103,7 +105,7 @@ public class ArrayList {
         int[] aux = new int[newSize];
         int length;
         if (newSize < this.content.length) {
-            throw new RuntimeException("TAMANHO PASSADO MENOR QUE O DO ARRAY ORIGINAL!!!");
+            return;
         } else {
             length = this.content.length;
         }
@@ -120,5 +122,24 @@ public class ArrayList {
                 return true;
         }
         return false;
+    }
+
+    public int size() {
+        return this.content.length;
+    }
+
+    public void swap(int i, int j) {
+        int aux = this.content[i];
+        this.content[i] = this.content[j];
+        this.content[j] = aux;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(this.content);
+    }
+
+    public int[] getContent() {
+        return this.content;
     }
 }
