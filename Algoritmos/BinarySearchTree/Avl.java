@@ -1,23 +1,23 @@
 package Algoritmos.BinarySearchTree;
 
-public class Avl extends BinarySearchTree {
+public class Avl<T> extends BST<T> {
 
     public Avl() {
         super();
     }
 
     @Override
-    public void add(Integer content) {
+    public void add(T content) {
 
     }
 
     @Override
-    public void remove(int content) {
+    public void remove(T content) {
 
     }
 
     @Override
-    public void remove(NodeTree node) {
+    public void remove(BSTNode node) {
 
     }
 
@@ -25,7 +25,7 @@ public class Avl extends BinarySearchTree {
 
     }
 
-    public int getBalance(NodeTree node) {
+    public int getBalance(BSTNode node) {
         return 0;
 
     }
